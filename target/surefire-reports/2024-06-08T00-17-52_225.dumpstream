@@ -1,0 +1,5 @@
+# Created at 2024-06-08T00:17:52.597
+Boot Manifest-JAR contains absolute paths in classpath 'D:\Company Assignments\magical_arena\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+

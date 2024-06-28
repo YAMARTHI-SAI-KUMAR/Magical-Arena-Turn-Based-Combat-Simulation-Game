@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Arena.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">magical_arena</a> &gt; <a href="index.source.html" class="el_package">com.game_battle</a> &gt; <span class="el_source">Arena.java</span></div><h1>Arena.java</h1><pre class="source lang-java linenums">package com.game_battle;
+
+
+
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
+class Arena {
+<span class="fc" id="L9">    private static final Logger LOGGER = Logger.getLogger(Arena.class.getName());</span>
+    private final Player player1;
+    private final Player player2;
+    private final Dice dice;
+
+
+<span class="fc" id="L15">    Arena(Player player1, Player player2) {</span>
+<span class="fc" id="L16">        this.player1 = player1;</span>
+<span class="fc" id="L17">        this.player2 = player2;</span>
+<span class="fc" id="L18">        this.dice = new Dice();</span>
+
+
+<span class="fc" id="L21">    }</span>
+
+    public void startBattle() {
+        Player attacker;
+        Player defender;
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        attacker = (player1.getHealth() &gt;= player2.getHealth()) ? player2 : player1;</span>
+        
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        defender = (attacker == player2) ? player1 : player2;</span>
+<span class="fc bfc" id="L29" title="All 4 branches covered.">        while (player1.isAlive() &amp;&amp; player2.isAlive()) {</span>
+<span class="fc" id="L30">            takeTurn(attacker, defender);</span>
+
+<span class="fc" id="L32">            Player temp = attacker;</span>
+<span class="fc" id="L33">            attacker = defender;</span>
+<span class="fc" id="L34">            defender = temp;</span>
+<span class="fc" id="L35">        }</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if (player1.isAlive()) {</span>
+<span class="fc" id="L37">            LOGGER.log(Level.INFO, &quot;Player1 wins!&quot;);</span>
+        } 
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        else if(player2.isAlive()){</span>
+<span class="fc" id="L40">            LOGGER.log(Level.INFO, &quot;Player2 wins!&quot;);</span>
+        }
+
+        else{
+<span class="fc" id="L44">            LOGGER.log(Level.INFO, &quot;No Player wins!&quot;);</span>
+
+        }
+<span class="fc" id="L47">    }</span>
+
+    private void takeTurn(Player attacker, Player defender) {
+<span class="fc" id="L50">        int roll1 = dice.roll();</span>
+<span class="fc" id="L51">        int attackDamage = attacker.rollAttackDice(roll1);</span>
+<span class="fc" id="L52">        int roll2 = dice.roll();</span>
+<span class="fc" id="L53">        int defense = defender.rollDefendDice(roll2);</span>
+<span class="fc" id="L54">        int damage = attackDamage - defense;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (damage &gt; 0) {</span>
+<span class="fc" id="L56">            defender.setHealth(defender.getHealth() - damage);</span>
+        }
+<span class="fc" id="L58">        LOGGER.log(Level.INFO, &quot;dice 1: {0}&quot;, roll1);</span>
+<span class="fc" id="L59">        LOGGER.log(Level.INFO, &quot;dice 2: {0}&quot;, roll2);</span>
+<span class="fc" id="L60">        LOGGER.log(Level.INFO, &quot;Attacker: {0} Defender: {1}&quot;, new Object[]{attacker, defender});</span>
+<span class="fc" id="L61">        LOGGER.log(Level.INFO, &quot;Attack Damage: {0} Defense: {1} Damage: {2}&quot;, new Object[]{attackDamage, defense, damage});</span>
+<span class="fc" id="L62">        LOGGER.log(Level.INFO, &quot;Damage dealt: {0}&quot;, Math.max(0, damage));</span>
+<span class="fc" id="L63">        LOGGER.log(Level.INFO, &quot;Defender's remaining health: {0}&quot;, defender.getHealth());</span>
+<span class="fc" id="L64">        LOGGER.log(Level.INFO, &quot;------------------------------------------------------&quot;);</span>
+<span class="fc" id="L65">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

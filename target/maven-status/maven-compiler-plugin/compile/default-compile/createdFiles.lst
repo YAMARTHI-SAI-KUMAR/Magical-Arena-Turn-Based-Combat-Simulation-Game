@@ -1,0 +1,6 @@
+com\game_battle\IScanner.class
+com\game_battle\Arena.class
+com\game_battle\Player.class
+com\game_battle\Dice.class
+com\game_battle\Game.class
+com\game_battle\ScannerWrapper.class
